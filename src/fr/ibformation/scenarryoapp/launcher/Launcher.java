@@ -34,61 +34,47 @@ public class Launcher {
 		
 // methode pour filter les mauvais mots à partir d'une liste		
 		
-		// renvoie le nombre de mots dans la liste bad_words
-		badWordsFunction();
+		String text = "je me promène dans un champ avec un connard et sa salope de copine. soudain nous croisons une pute et mon pote se met à l'enculer.";
 		
-		// import du fichier et conversion en un arraylist
-	    File txt = new File("files/bad_words.txt");
-	    Scanner scan = new Scanner(txt);
-	    ArrayList<String> data = new ArrayList<String>() ;
-	    while(scan.hasNextLine()){
-	        data.add(scan.nextLine());
-	    }
-	    System.out.println(data);
-	    String[] simpleArray = data.toArray(new String[]{});
-	    
-		// comparaison d'un text à la liste et remplacement des mauvais mots par ****
-	    String text = "je me promène dans un champ avec un connard et sa salope de copine. soudain nous croisons une pute et mon pote se met à l'enculer.";
-	    for (String word : simpleArray) {
-	        String xxx = new String(new char[word.length()]).replace("\0", "*");        
-	        text = text.replace(word, xxx);
-	    }
-	    System.out.println(text);
-	    scan.close();
+		// renvoie le texte avec remplacement des bad_words
+		String returnedText = badWordsFunction(text);
+	    System.out.println(returnedText);
 
 	    
-
+	    
 }
 	
 // --------------------------------------------------------------------------------------------------------------
 // ------------------------------------------- functions --------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------
 
+	// method to discriminate bad words
 	
-// method to discriminate bad words
-
-	public static void badWordsFunction() {
-	
-		try (
-				FileInputStream fichier = new FileInputStream("files/bad_words.txt"); // This will be automaticaly closed when the try / catch is finished with this syntax
-				Scanner s = new Scanner(fichier); // This will be automaticaly closed when the try / catch is finished with this syntax
-			) {
-				int countWord = 0;
-				// If my scanner have a next line
-				while (s.hasNextLine()) {
-					countWord++;
-					s.nextLine(); // Go to the next line
-				}
-				System.out.println("countWord : "+countWord);
-			} catch (IOException e) {
-				System.out.println("[DemoFile] numberOfLineIntoFile : An error from count the number of words into file !");
-				System.out.println(e);
-			}
+	public static String badWordsFunction(String text) throws FileNotFoundException {
 		
+		// import du fichier et conversion en un arraylist
+	    File txt = new File("files/bad_words.txt");
+	    Scanner scan = new Scanner(txt);
+	    int countWord = 0;
+	    ArrayList<String> badWords = new ArrayList<String>() ;
+	    while(scan.hasNextLine()){
+	    	badWords.add(scan.nextLine());
+			countWord++;
+	    }
+		System.out.println("nombre de mauvais mots : "+countWord);
+	    System.out.println(badWords);
+	    
+		// comparaison d'un text à la liste et remplacement des mauvais mots par ****
+	    for (String word : badWords) {
+	        String xxx = new String(new char[word.length()]).replace("\0", "*");        
+	        text = text.toLowerCase().replace(word, xxx);
+	    }
+	    scan.close();
+	    
+	    return text;
 	}
-
 	
-	
+		
 // --------------------------------------------------------------------------------------------------------------
 
 }
