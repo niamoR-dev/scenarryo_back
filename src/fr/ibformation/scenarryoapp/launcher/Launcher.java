@@ -60,6 +60,7 @@ public class Launcher {
 	    while(scan.hasNextLine()){
 	    	badWords.add(scan.nextLine());
 			countWord++;
+			
 	    }
 		System.out.println("nombre de mauvais mots : "+countWord);
 	    System.out.println(badWords);
@@ -74,7 +75,8 @@ public class Launcher {
 	    return text;
 	}
 	
-		
+	
+	
 // --------------------------------------------------------------------------------------------------------------
 
 }
